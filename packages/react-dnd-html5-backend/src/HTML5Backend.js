@@ -36,6 +36,8 @@ export default class HTML5Backend {
 		this.currentDragSourceNodeOffset = null
 		this.currentDragSourceNodeOffsetChanged = false
 		this.altKeyPressed = false
+		this.shiftKeyPressed = false
+		this.ctrlKeyPressed = false
 
 		this.getSourceClientOffset = this.getSourceClientOffset.bind(this)
 		this.handleTopDragStart = this.handleTopDragStart.bind(this)
@@ -188,8 +190,16 @@ export default class HTML5Backend {
 		const sourceId = this.monitor.getSourceId()
 		const sourceNodeOptions = this.sourceNodeOptions[sourceId]
 
-		return defaults(sourceNodeOptions || {}, {
-			dropEffect: this.altKeyPressed ? 'copy' : 'move',
+		let dropEffect = 'move'
+		if (this.altKeyPressed) {
+			dropEffect = 'copy'
+		} else if (this.shiftKeyPressed) {
+			dropEffect = 'link'
+		} else if (this.ctrlKeyPressed) {
+			dropEffect = 'none'
+		}
+
+		return defaults(sourceNodeOptions || {}, {dropEffect}
 		})
 	}
 
@@ -489,6 +499,8 @@ export default class HTML5Backend {
 		}
 
 		this.altKeyPressed = e.altKey
+		this.shiftKeyPressed = e.shiftKey
+		this.ctrlKeyPressed = e.ctrlKey
 
 		if (!isFirefox()) {
 			// Don't emit hover in `dragenter` on Firefox due to an edge case.
@@ -532,6 +544,8 @@ export default class HTML5Backend {
 		}
 
 		this.altKeyPressed = e.altKey
+		this.shiftKeyPressed = e.shiftKey
+		this.ctrlKeyPressed = e.ctrlKey
 
 		this.actions.hover(dragOverTargetIds, {
 			clientOffset: getEventClientOffset(e),
