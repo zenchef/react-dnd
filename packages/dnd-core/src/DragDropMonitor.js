@@ -14,7 +14,6 @@ export default class DragDropMonitor {
 		this.registry = new HandlerRegistry(store)
 	}
 
-
 	subscribeToStateChange(listener, options = {}) {
 		const { handlerIds } = options
 		invariant(typeof listener === 'function', 'listener must be a function.')
