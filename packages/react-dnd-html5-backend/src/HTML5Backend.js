@@ -199,8 +199,7 @@ export default class HTML5Backend {
 			dropEffect = 'none'
 		}
 
-		return defaults(sourceNodeOptions || {}, {dropEffect}
-		})
+		return defaults(sourceNodeOptions || {}, { dropEffect })
 	}
 
 	getCurrentDropEffect() {
