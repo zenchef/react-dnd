@@ -199,8 +199,7 @@ export default class HTML5Backend {
 			dropEffect = 'none'
 		}
 
-		return defaults(sourceNodeOptions || {}, {dropEffect}
-		})
+		return defaults({}, sourceNodeOptions || {}, { dropEffect })
 	}
 
 	getCurrentDropEffect() {
@@ -216,7 +215,7 @@ export default class HTML5Backend {
 		const sourceId = this.monitor.getSourceId()
 		const sourcePreviewNodeOptions = this.sourcePreviewNodeOptions[sourceId]
 
-		return defaults(sourcePreviewNodeOptions || {}, {
+		return defaults({}, sourcePreviewNodeOptions || {}, {
 			anchorX: 0.5,
 			anchorY: 0.5,
 			captureDraggingState: false,
