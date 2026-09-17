@@ -17,13 +17,7 @@ If you use [npm](http://npmjs.com):
 npm install --save react-dnd-html5-backend
 ```
 
-The npm package defaults to the CommonJS build.
-
-However it also includes a pre-minified UMD build in the `dist` folder.
-The UMD build exports a global `window.ReactDnDHTML5Backend` when imported as a `<script>` tag.
-
-If you’d rather not use npm, you can use [unpkg](http://unpkg.com/) to access the UMD build directly: [ReactDnDHTML5Backend.min.js](https://unpkg.com/react-dnd-html5-backend@latest/dist/ReactDnDHTML5Backend.min.js).
-You may point your Bower config to it.
+The npm package is the CommonJS build (`lib/`). There is no UMD/`dist` build.
 
 ## Browser Support
 

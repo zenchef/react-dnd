@@ -48,4 +48,55 @@ describe('The HTML5 Backend', () => {
 			expect(backend.window.x).toEqual(1)
 		})
 	})
+
+	describe('getCurrentDropEffect', () => {
+		const mockBackend = () =>
+			new HTML5Backend({
+				getActions: () => null,
+				getRegistry: () => null,
+				getContext: () => ({}),
+				getMonitor: () => ({
+					getSourceId: () => 1,
+					isDragging: () => true,
+					getItemType: () => 'CARD',
+				}),
+			})
+
+		it('defaults to move', () => {
+			expect(mockBackend().getCurrentDropEffect()).toBe('move')
+		})
+
+		it('alt key => copy', () => {
+			const backend = mockBackend()
+			backend.altKeyPressed = true
+			expect(backend.getCurrentDropEffect()).toBe('copy')
+		})
+
+		it('shift key => link', () => {
+			const backend = mockBackend()
+			backend.shiftKeyPressed = true
+			expect(backend.getCurrentDropEffect()).toBe('link')
+		})
+
+		it('ctrl key => none', () => {
+			const backend = mockBackend()
+			backend.ctrlKeyPressed = true
+			expect(backend.getCurrentDropEffect()).toBe('none')
+		})
+
+		it('alt takes priority over shift and ctrl', () => {
+			const backend = mockBackend()
+			backend.altKeyPressed = true
+			backend.shiftKeyPressed = true
+			backend.ctrlKeyPressed = true
+			expect(backend.getCurrentDropEffect()).toBe('copy')
+		})
+
+		it('a source-supplied dropEffect wins over the modifier keys', () => {
+			const backend = mockBackend()
+			backend.altKeyPressed = true
+			backend.sourceNodeOptions[1] = { dropEffect: 'move' }
+			expect(backend.getCurrentDropEffect()).toBe('move')
+		})
+	})
 })
