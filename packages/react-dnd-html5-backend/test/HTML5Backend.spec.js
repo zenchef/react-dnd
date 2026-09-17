@@ -98,5 +98,13 @@ describe('The HTML5 Backend', () => {
 			backend.sourceNodeOptions[1] = { dropEffect: 'move' }
 			expect(backend.getCurrentDropEffect()).toBe('move')
 		})
+
+		it('does not mutate sourceNodeOptions, so modifier keys keep working across reads', () => {
+			const backend = mockBackend()
+			backend.sourceNodeOptions[1] = { captureDraggingState: true }
+			expect(backend.getCurrentDropEffect()).toBe('move')
+			backend.altKeyPressed = true
+			expect(backend.getCurrentDropEffect()).toBe('copy')
+		})
 	})
 })
